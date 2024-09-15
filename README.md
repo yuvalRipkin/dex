@@ -11,7 +11,8 @@ The commands:
 
 ![image](https://github.com/user-attachments/assets/fe4b7a05-283a-493d-9e20-cd09a415126a)
 
-explanation:
+## explanation:
+
 mkdir homework - create a directory named homework.
 
 cd homework - move to homework directory

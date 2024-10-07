@@ -2,40 +2,21 @@ pipeline {
     agent any
 
     environment {
+        IMAGE_NAME = 'yuvalripkin/hw-3'
+        DOCKERFILE_PATH = '/home/yuval-ripkin/hw/Dockerfile'
+        CONTEXT_PATH = '/home/yuval-ripkin/hw'
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        DOCKER_IMAGE_NAME = 'yuvalripkin/hw-3'
-        DOCKER_IMAGE_TAG = '1.0' 
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                // Checkout your source code
-                checkout scm
-            }
-        }
-
-        stage('Build Docker Image') {
+        stage('Build and Push Docker Image') {
             steps {
                 script {
-                    def customImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
-                }
-            }
-        }
-
-        stage('Login to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_CREDENTIALS_ID}") {
+                    sh "docker build -t ${IMAGE_NAME} -f ${DOCKERFILE_PATH} ${CONTEXT_PATH}"
+                    docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
+                        sh "docker tag ${IMAGE_NAME} ${IMAGE_NAME}:latest"
+                        sh "docker push ${IMAGE_NAME}:latest"
                     }
-                }
-            }
-        }
-
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    docker.image("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}").push()
                 }
             }
         }
@@ -43,10 +24,10 @@ pipeline {
 
     post {
         success {
-            echo 'Docker image built and pushed successfully!'
+            echo 'Build and push succeeded!'
         }
         failure {
-            echo 'An error occurred during the pipeline execution.'
+            echo 'Build or push failed.'
         }
     }
 }

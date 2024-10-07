@@ -2,10 +2,9 @@ pipeline {
     agent any
 
     environment {
-        // Replace with your Docker Hub credentials
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        DOCKER_IMAGE_NAME = 'your-dockerhub-username/your-image-name'
-        DOCKER_IMAGE_TAG = 'latest' // Change this if you want to use different tags
+        DOCKER_IMAGE_NAME = yuvalripkin/hw-3'
+        DOCKER_IMAGE_TAG = '1.0' 
     }
 
     stages {
@@ -19,7 +18,6 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
                     def customImage = docker.build("${DOCKER_IMAGE_NAME}:${DOCKER_IMAGE_TAG}")
                 }
             }

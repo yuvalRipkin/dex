@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         DOCKER_CREDENTIALS_ID = 'docker-hub-credentials'
-        DOCKER_IMAGE_NAME = yuvalripkin/hw-3'
+        DOCKER_IMAGE_NAME = 'yuvalripkin/hw-3'
         DOCKER_IMAGE_TAG = '1.0' 
     }
 

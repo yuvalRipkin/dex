@@ -1,4 +1,6 @@
 # dex course
+the hw of sukkot holiday (lesson 6) are in folder homework 4
+
 ### Homework lesson 1
 
 virtualbox installed:
